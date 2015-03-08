@@ -44,8 +44,8 @@ public class StudentDTO{
         this.secondName = secondName;
     }
 
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + " (id: " + id + ", First_Name: " + firstName + ", Second_Name: " + secondName + " )" + "\n";
-    }
+//    @Override
+//    public String toString() {
+//        return getClass().getSimpleName() + " (id: " + id + ", First_Name: " + firstName + ", Second_Name: " + secondName + " )" + "\n";
+//    }
 }

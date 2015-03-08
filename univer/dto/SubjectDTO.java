@@ -33,8 +33,8 @@ public class SubjectDTO {
         Subject_name = subjectName;
     }
 
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + " (id: " + id + ", SubjectName: " + Subject_name  + ")" + "\n";
-    }
+//    @Override
+//    public String toString() {
+//        return getClass().getSimpleName() + " (id: " + id + ", SubjectName: " + Subject_name  + ")" + "\n";
+//    }
 }

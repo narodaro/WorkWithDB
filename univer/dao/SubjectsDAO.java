@@ -1,17 +1,16 @@
 package com.veinik.Lesson7.src.main.resources.univer.dao;
 
-import com.veinik.Lesson7.src.main.resources.univer.dbConnection.DBConnection;
+import com.veinik.Lesson7.src.main.resources.univer.DaoObjects;
 import com.veinik.Lesson7.src.main.resources.univer.dto.SubjectDTO;
 import com.veinik.Lesson7.src.main.resources.univer.interfaces.ObligationSubject;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SubjectsDAO implements ObligationSubject {
+public class SubjectsDAO extends DaoObjects implements ObligationSubject {
 
     private static final String SQL_INSERT = "INSERT INTO SUBJECTS(SUBJECT_NAME) values(?)";
     private static final String SQL_DELETE = "DELETE FROM SUBJECTS WHERE ID = ?";
@@ -19,33 +18,24 @@ public class SubjectsDAO implements ObligationSubject {
     private static final String SQL_READ = "SELECT * FROM SUBJECTS WHERE ID = ?";
     private static final String SQL_READALL = "SELECT * FROM SUBJECTS";
 
-    private static Connection conn = new DBConnection().getDBConnection();
-
-    private static PreparedStatement psSubjectINSERT;
-    private static PreparedStatement psSubjectDELETE;
-    private static PreparedStatement psSubjectUPDATE;
-    private static PreparedStatement psSubjectREAD;
-    private static PreparedStatement psSubjectREADALL;
 
     @Override
     public SubjectDTO create(SubjectDTO Subject) throws SQLException {
-        if (psSubjectINSERT == null) {
-            psSubjectINSERT = conn.prepareStatement(SQL_INSERT);
+        if (psINSERT == null) {
+            psINSERT = conn.prepareStatement(SQL_INSERT);
         }
-
-        psSubjectINSERT.setString(1, Subject.getSubject_name());
-        psSubjectINSERT.executeUpdate();
-
+        psINSERT.setString(1, Subject.getSubject_name());
+        psINSERT.executeUpdate();
         return Subject;
     }
 
     @Override
     public SubjectDTO read(int key) throws SQLException {
-        if (psSubjectREAD == null) {
-            psSubjectREAD = conn.prepareStatement(SQL_READ);
+        if (psREAD == null) {
+            psREAD = conn.prepareStatement(SQL_READ);
         }
-        psSubjectREAD.setInt(1, key);
-        ResultSet res = psSubjectREAD.executeQuery();
+        psREAD.setInt(1, key);
+        ResultSet res = psREAD.executeQuery();
 
         SubjectDTO subject = new SubjectDTO();
         while (res.next()) {
@@ -53,37 +43,36 @@ public class SubjectsDAO implements ObligationSubject {
             subject.setSubject_name(res.getString("Subject_Name"));
         }
         res.close();
-
         return subject;
     }
 
     @Override
     public void delete(int key) throws SQLException{
-        if (psSubjectDELETE == null) {
-            psSubjectDELETE = conn.prepareStatement(SQL_DELETE);
+        if (psDELETE == null) {
+            psDELETE = conn.prepareStatement(SQL_DELETE);
         }
-        psSubjectDELETE.setInt(1, key);
-        psSubjectDELETE.executeUpdate();
+        psDELETE.setInt(1, key);
+        psDELETE.executeUpdate();
     }
 
     @Override
     public void update(SubjectDTO Subject, int key) throws SQLException {
-        if (psSubjectUPDATE == null) {
-            psSubjectUPDATE = conn.prepareStatement(SQL_UPDATE);
+        if (psUPDATE == null) {
+            psUPDATE = conn.prepareStatement(SQL_UPDATE);
         }
-        psSubjectUPDATE.setString(1, Subject.getSubject_name());
-        psSubjectUPDATE.setInt(2, key);
-        psSubjectUPDATE.executeUpdate();
+        psUPDATE.setString(1, Subject.getSubject_name());
+        psUPDATE.setInt(2, key);
+        psUPDATE.executeUpdate();
     }
 
     @Override
     public List<SubjectDTO> readall() throws SQLException{
-        if (psSubjectREADALL == null) {
-            psSubjectREADALL = conn.prepareStatement(SQL_READALL);
+        if (psREADALL == null) {
+            psREADALL = conn.prepareStatement(SQL_READALL);
         }
 
         List<SubjectDTO> subjects = new ArrayList<SubjectDTO>();
-        ResultSet res = psSubjectREADALL.executeQuery();
+        ResultSet res = psREADALL.executeQuery();
 
         while(res.next()){
             SubjectDTO subject = new SubjectDTO();
@@ -92,21 +81,6 @@ public class SubjectsDAO implements ObligationSubject {
             subjects.add(subject);
         }
         res.close();
-
         return subjects;
-    }
-
-    public void  psSubjectClose() throws SQLException {
-        closePSifNotNULL(psSubjectINSERT);
-        closePSifNotNULL(psSubjectREAD);
-        closePSifNotNULL(psSubjectDELETE);
-        closePSifNotNULL(psSubjectUPDATE);
-        closePSifNotNULL(psSubjectREADALL);
-    }
-
-    private void closePSifNotNULL(PreparedStatement ps) throws SQLException {
-        if(ps != null) {
-            ps.close();
-        }
     }
 }

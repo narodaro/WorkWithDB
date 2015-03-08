@@ -55,8 +55,8 @@ public class StudentsMarksDTO {
         this.mark = mark;
     }
 
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + " ( id: " + id + ", Mark: " + mark + " )" + "\n";
-    }
+//    @Override
+//    public String toString() {
+//        return getClass().getSimpleName() + " ( id: " + id + ", Mark: " + mark + " )" + "\n";
+//    }
 }

@@ -1,13 +1,11 @@
 package com.veinik.Lesson7.src.main.resources.univer.dao;
 
-import com.veinik.Lesson7.src.main.resources.univer.dbConnection.DBConnection;
+import com.veinik.Lesson7.src.main.resources.univer.DaoObjects;
 import com.veinik.Lesson7.src.main.resources.univer.dto.StudentDTO;
 import com.veinik.Lesson7.src.main.resources.univer.dto.StudentsMarksDTO;
 import com.veinik.Lesson7.src.main.resources.univer.dto.SubjectDTO;
 import com.veinik.Lesson7.src.main.resources.univer.interfaces.ObligationStudentsMark;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class StudentsMarkDAO implements ObligationStudentsMark {
+public class StudentsMarkDAO extends DaoObjects implements ObligationStudentsMark {
 
     private static final String SQL_INSERT = "INSERT INTO STUDENTS_MARKS(ID_STUDENT, ID_SUBJECT, MARK) values(?, ?, ?)";
     private static final String SQL_DELETE = "DELETE FROM STUDENTS_MARKS WHERE ID = ?";
@@ -29,35 +27,26 @@ public class StudentsMarkDAO implements ObligationStudentsMark {
                                             "ON students_marks.id_subject = subjects.id\n" +
                                             "where students.id = ?";
 
-    private static Connection conn = new DBConnection().getDBConnection();
-
-    private static PreparedStatement psMarkINSERT;
-    private static PreparedStatement psMarkDELETE;
-    private static PreparedStatement psMarkUPDATE;
-    private static PreparedStatement psMarkREAD;
-    private static PreparedStatement psMarkREADALL;
 
     @Override
     public StudentsMarksDTO create(StudentsMarksDTO mark) throws SQLException {
-        if (psMarkINSERT == null) {
-            psMarkINSERT = conn.prepareStatement(SQL_INSERT);
+        if (psINSERT == null) {
+            psINSERT = conn.prepareStatement(SQL_INSERT);
         }
-        psMarkINSERT.setInt(1, mark.getIdStudent());
-        psMarkINSERT.setInt(2, mark.getIdSubject());
-        psMarkINSERT.setInt(3, mark.getMark());
-        psMarkINSERT.executeUpdate();
-
+        psINSERT.setInt(1, mark.getIdStudent());
+        psINSERT.setInt(2, mark.getIdSubject());
+        psINSERT.setInt(3, mark.getMark());
+        psINSERT.executeUpdate();
         return mark;
     }
 
     @Override
     public Map<StudentDTO,Map<SubjectDTO,StudentsMarksDTO>> read(int key) throws SQLException {
-
-        if (psMarkREAD == null) {
-            psMarkREAD = conn.prepareStatement(SQL_READ);
+        if (psREAD == null) {
+            psREAD = conn.prepareStatement(SQL_READ);
         }
-        psMarkREAD.setInt(1, key);
-        ResultSet res = psMarkREAD.executeQuery();
+        psREAD.setInt(1, key);
+        ResultSet res = psREAD.executeQuery();
 
         Map<StudentDTO,Map<SubjectDTO,StudentsMarksDTO>> allTheMarksOfOneStudent = new HashMap<>();
         Map<SubjectDTO,StudentsMarksDTO> subsMarks = new HashMap<>();
@@ -73,9 +62,7 @@ public class StudentsMarkDAO implements ObligationStudentsMark {
 
             student.setFirstName(res.getString("First_Name"));
             student.setSecondName(res.getString("Second_Name"));
-
         }
-
         allTheMarksOfOneStudent.put(student,subsMarks);
         res.close();
         return allTheMarksOfOneStudent;
@@ -83,32 +70,31 @@ public class StudentsMarkDAO implements ObligationStudentsMark {
 
     @Override
     public void delete(int key) throws SQLException {
-        if (psMarkDELETE == null) {
-            psMarkDELETE = conn.prepareStatement(SQL_DELETE);
+        if (psDELETE == null) {
+            psDELETE = conn.prepareStatement(SQL_DELETE);
         }
-        psMarkDELETE.setInt(1, key);
-        psMarkDELETE.executeUpdate();
+        psDELETE.setInt(1, key);
+        psDELETE.executeUpdate();
     }
 
     @Override
     public void update(StudentsMarksDTO mark) throws SQLException {
-        if (psMarkUPDATE == null) {
-            psMarkUPDATE = conn.prepareStatement(SQL_UPDATE);
+        if (psUPDATE == null) {
+            psUPDATE = conn.prepareStatement(SQL_UPDATE);
         }
-        psMarkUPDATE.setInt(1, mark.getMark());
-        psMarkUPDATE.setInt(2, mark.getIdSubject());
-        psMarkUPDATE.setInt(3, mark.getIdStudent());
-        psMarkUPDATE.executeUpdate();
+        psUPDATE.setInt(1, mark.getMark());
+        psUPDATE.setInt(2, mark.getIdSubject());
+        psUPDATE.setInt(3, mark.getIdStudent());
+        psUPDATE.executeUpdate();
     }
 
     @Override
     public List<StudentsMarksDTO> readall() throws SQLException {
         List<StudentsMarksDTO> marks = new ArrayList<>();
-
-        if (psMarkREADALL == null) {
-            psMarkREADALL = conn.prepareStatement(SQL_READALL);
+        if (psREADALL == null) {
+            psREADALL = conn.prepareStatement(SQL_READALL);
         }
-        ResultSet res = psMarkREADALL.executeQuery();
+        ResultSet res = psREADALL.executeQuery();
 
         while (res.next()) {
             StudentsMarksDTO mark = new StudentsMarksDTO();
@@ -120,19 +106,5 @@ public class StudentsMarkDAO implements ObligationStudentsMark {
         }
         res.close();
         return marks;
-    }
-
-    public void psMarkClose() throws SQLException {
-        closePSifNotNULL(psMarkINSERT);
-        closePSifNotNULL(psMarkREAD);
-        closePSifNotNULL(psMarkDELETE);
-        closePSifNotNULL(psMarkUPDATE);
-        closePSifNotNULL(psMarkREADALL);
-    }
-
-    private void closePSifNotNULL(PreparedStatement ps) throws SQLException {
-        if (ps != null) {
-            ps.close();
-        }
     }
 }
