@@ -1,8 +1,7 @@
 package com.veinik.Lesson7.src.main.resources.univer.dao;
 
-import com.veinik.Lesson7.src.main.resources.univer.DaoObjects;
 import com.veinik.Lesson7.src.main.resources.univer.dto.StudentDTO;
-import com.veinik.Lesson7.src.main.resources.univer.interfaces.ObligationStudent;
+import com.veinik.Lesson7.src.main.resources.univer.dao.interfaces.ObligationStudent;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -16,7 +16,6 @@ public class DBConnection {
         try {
             connection = DriverManager.getConnection(url, user, pass);
             if(!connection.isClosed()){
-//                System.out.println("Cоединение с БД установлено!");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -27,12 +26,11 @@ public class DBConnection {
         return connection;
     }
 
-    public void closeConnection(){
-        try {
-            connection.close();
-//            System.out.println("Cоединение с БД разорвано!");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+//    public void closeConnection(){
+//        try {
+//            connection.close();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

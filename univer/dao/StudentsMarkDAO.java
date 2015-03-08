@@ -1,10 +1,9 @@
 package com.veinik.Lesson7.src.main.resources.univer.dao;
 
-import com.veinik.Lesson7.src.main.resources.univer.DaoObjects;
 import com.veinik.Lesson7.src.main.resources.univer.dto.StudentDTO;
 import com.veinik.Lesson7.src.main.resources.univer.dto.StudentsMarksDTO;
 import com.veinik.Lesson7.src.main.resources.univer.dto.SubjectDTO;
-import com.veinik.Lesson7.src.main.resources.univer.interfaces.ObligationStudentsMark;
+import com.veinik.Lesson7.src.main.resources.univer.dao.interfaces.ObligationStudentsMark;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,7 +25,6 @@ public class StudentsMarkDAO extends DaoObjects implements ObligationStudentsMar
                                             "LEFT JOIN Subjects\n" +
                                             "ON students_marks.id_subject = subjects.id\n" +
                                             "where students.id = ?";
-
 
     @Override
     public StudentsMarksDTO create(StudentsMarksDTO mark) throws SQLException {

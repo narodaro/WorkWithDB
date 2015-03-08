@@ -1,10 +1,8 @@
 package com.veinik.Lesson7.src.main.resources.univer.dao;
 
-import com.veinik.Lesson7.src.main.resources.univer.DaoObjects;
 import com.veinik.Lesson7.src.main.resources.univer.dto.SubjectDTO;
-import com.veinik.Lesson7.src.main.resources.univer.interfaces.ObligationSubject;
+import com.veinik.Lesson7.src.main.resources.univer.dao.interfaces.ObligationSubject;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,7 +15,6 @@ public class SubjectsDAO extends DaoObjects implements ObligationSubject {
     private static final String SQL_UPDATE = "UPDATE SUBJECTS SET SUBJECT_NAME = ? WHERE ID = ?";
     private static final String SQL_READ = "SELECT * FROM SUBJECTS WHERE ID = ?";
     private static final String SQL_READALL = "SELECT * FROM SUBJECTS";
-
 
     @Override
     public SubjectDTO create(SubjectDTO Subject) throws SQLException {

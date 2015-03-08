@@ -11,9 +11,7 @@ import com.veinik.Lesson7.src.main.resources.univer.dto.SubjectDTO;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Main {
 
@@ -28,46 +26,55 @@ public class Main {
         StudentsMarkDAO mark = new StudentsMarkDAO();
         StudentsMarksDTO m;
 
-//        student.create(new StudentDTO("Надежда", "Тимошенко"));
-//        st = student.read(4);
-//        printStudent(st);
-//        student.update(new StudentDTO("Вася","Пупкин"),38);
-//        student.delete(38);
-//        List<StudentDTO> students = student.readall();
-//        for (StudentDTO s: students)
-//        printStudent(s);
+        // Work with Students
+        student.create(new StudentDTO("Надежда", "Тимошенко"));
+        st = student.read(4);
+        printStudent(st);
+        student.update(new StudentDTO("Вася","Пупкин"),38);
+        student.delete(38);
+        List<StudentDTO> students = student.readall();
+        for (StudentDTO s: students)
+        printStudent(s);
 
-//
-//        subject.create(new SubjectDTO("Paleantologie"));
-//        subject.create(new SubjectDTO("Archeologie"));
-//        subject.create(new SubjectDTO("Zoologie"));
-//        sub = subject.read(2);
-//        printSubject(sub);
-//        subject.delete(10);
-//        subject.update(new SubjectDTO("Filologie"), 9);
-//        List<SubjectDTO> subjects = subject.readall();
-//        for (SubjectDTO subj: subjects)
-//        printSubject(subj);
+        // Work with Subjects
+        subject.create(new SubjectDTO("Zoologie"));
+        sub = subject.read(2);
+        printSubject(sub);
+        subject.delete(10);
+        subject.update(new SubjectDTO("Filologie"), 9);
+        List<SubjectDTO> subjects = subject.readall();
+        for (SubjectDTO subj: subjects)
+        printSubject(subj);
 
-//        mark.create(new StudentsMarksDTO(1, 7, 5));
-//        mark.create(new StudentsMarksDTO(2, 6, 5));
-//        mark.create(new StudentsMarksDTO(3, 3, 4));
-//        mark.create(new StudentsMarksDTO(4, 9, 3));
-//        System.out.println(mark.read(1)); // Получить все предметы одного студента вместе с их оценками
-//        Map<StudentDTO,Map<SubjectDTO,StudentsMarksDTO>> allmarks = mark.read(1);
-//        System.out.println(allmarks);
-//        mark.delete(20);
-//        mark.update(new StudentsMarksDTO(1, 7, 5));
-//        List<StudentsMarksDTO> allMarks = mark.readall();
-//        for (StudentsMarksDTO marks: allMarks)
-//        printMark(marks);
-
+        // Work with Marks
+        mark.create(new StudentsMarksDTO(1, 7, 5));
+        Map<StudentDTO,Map<SubjectDTO,StudentsMarksDTO>> allmarks = mark.read(1);
+        printMarksOneStudent(allmarks);
+        mark.delete(20);
+        mark.update(new StudentsMarksDTO(1, 7, 5));
+        List<StudentsMarksDTO> allMarks = mark.readall();
+        for (StudentsMarksDTO marks: allMarks)
+        printMark(marks);
 
         student.psClose();
         subject.psClose();
         mark.psClose();
 
         conn.close();
+    }
+
+    private static void printMarksOneStudent(Map<StudentDTO, Map<SubjectDTO, StudentsMarksDTO>> allmarks) {
+        for (Map.Entry<StudentDTO,Map<SubjectDTO,StudentsMarksDTO>> allst : allmarks.entrySet()) {
+            StudentDTO students = allst.getKey();
+            System.out.println(students.getFirstName() + " " + students.getSecondName());
+
+            Map<SubjectDTO,StudentsMarksDTO> subsMarks = allst.getValue();
+            for (Map.Entry<SubjectDTO,StudentsMarksDTO> all : subsMarks.entrySet()) {
+                SubjectDTO subj = all.getKey();
+                StudentsMarksDTO marks = all.getValue();
+                System.out.println(subj.getSubject_name() + " " + marks.getMark());
+            }
+        }
     }
 
     private static void printMark(StudentsMarksDTO m) {

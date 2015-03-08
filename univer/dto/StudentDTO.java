@@ -43,9 +43,4 @@ public class StudentDTO{
     public void setSecondName(String secondName) {
         this.secondName = secondName;
     }
-
-//    @Override
-//    public String toString() {
-//        return getClass().getSimpleName() + " (id: " + id + ", First_Name: " + firstName + ", Second_Name: " + secondName + " )" + "\n";
-//    }
 }

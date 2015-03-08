@@ -1,4 +1,4 @@
-package com.veinik.Lesson7.src.main.resources.univer.interfaces;
+package com.veinik.Lesson7.src.main.resources.univer.dao.interfaces;
 
 import com.veinik.Lesson7.src.main.resources.univer.dto.StudentDTO;
 import com.veinik.Lesson7.src.main.resources.univer.dto.StudentsMarksDTO;

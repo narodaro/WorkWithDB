@@ -54,9 +54,4 @@ public class StudentsMarksDTO {
     public void setMark(int mark) {
         this.mark = mark;
     }
-
-//    @Override
-//    public String toString() {
-//        return getClass().getSimpleName() + " ( id: " + id + ", Mark: " + mark + " )" + "\n";
-//    }
 }

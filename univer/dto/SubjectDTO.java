@@ -32,9 +32,4 @@ public class SubjectDTO {
     public void setSubject_name(String subjectName) {
         Subject_name = subjectName;
     }
-
-//    @Override
-//    public String toString() {
-//        return getClass().getSimpleName() + " (id: " + id + ", SubjectName: " + Subject_name  + ")" + "\n";
-//    }
 }
