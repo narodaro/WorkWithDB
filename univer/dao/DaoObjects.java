@@ -8,21 +8,25 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DaoObjects {
-    public PreparedStatement psINSERT;
-    public PreparedStatement psDELETE;
-    public PreparedStatement psUPDATE;
-    public PreparedStatement psREAD;
-    public PreparedStatement psREADALL;
+    protected PreparedStatement psINSERT;
+    protected PreparedStatement psDELETE;
+    protected PreparedStatement psUPDATE;
+    protected PreparedStatement psREAD;
+    protected PreparedStatement psREADALL;
 
-    public Connection conn = new DBConnection().getDBConnection();
+    protected Connection conn = new DBConnection().getDBConnection();
 
-    public void closePSifNotNULL(PreparedStatement ps) throws SQLException {
-        if (ps != null) {
-            ps.close();
+    public void closePSifNotNULL(PreparedStatement ps) {
+        try {
+            if (ps != null) {
+                ps.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
-    public void psClose() throws SQLException {
+    public void psClose() {
         closePSifNotNULL(psINSERT);
         closePSifNotNULL(psREAD);
         closePSifNotNULL(psDELETE);

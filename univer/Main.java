@@ -17,41 +17,40 @@ public class Main {
 
     private static Connection conn = new DBConnection().getDBConnection();
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException{
 
         StudentDAO student = new StudentDAO();
         StudentDTO st;
         SubjectsDAO subject = new SubjectsDAO();
         SubjectDTO sub;
         StudentsMarkDAO mark = new StudentsMarkDAO();
-        StudentsMarksDTO m;
 
-        // Work with Students
+//        Work with Students
         student.create(new StudentDTO("Надежда", "Тимошенко"));
-        st = student.read(4);
+        st = student.read(42);
         printStudent(st);
-        student.update(new StudentDTO("Вася","Пупкин"),38);
-        student.delete(38);
+        student.update(new StudentDTO("Вася","Пупкин"),41);
+        student.delete(43);
         List<StudentDTO> students = student.readall();
         for (StudentDTO s: students)
         printStudent(s);
 
-        // Work with Subjects
-        subject.create(new SubjectDTO("Zoologie"));
+//        Work with Subjects
+        subject.create(new SubjectDTO("Filologie"));
         sub = subject.read(2);
         printSubject(sub);
-        subject.delete(10);
-        subject.update(new SubjectDTO("Filologie"), 9);
+        subject.delete(13);
+        subject.update(new SubjectDTO("Psihology"), 9);
         List<SubjectDTO> subjects = subject.readall();
         for (SubjectDTO subj: subjects)
         printSubject(subj);
 
         // Work with Marks
-        mark.create(new StudentsMarksDTO(1, 7, 5));
-        Map<StudentDTO,Map<SubjectDTO,StudentsMarksDTO>> allmarks = mark.read(1);
+        mark.create(new StudentsMarksDTO(2, 2, 5));
+        Map<StudentDTO,Map<SubjectDTO,StudentsMarksDTO>> allmarks = mark.read(3);
         printMarksOneStudent(allmarks);
-        mark.delete(20);
-        mark.update(new StudentsMarksDTO(1, 7, 5));
+        mark.delete(25);
+        mark.update(new StudentsMarksDTO(2, 2, 4));
         List<StudentsMarksDTO> allMarks = mark.readall();
         for (StudentsMarksDTO marks: allMarks)
         printMark(marks);
