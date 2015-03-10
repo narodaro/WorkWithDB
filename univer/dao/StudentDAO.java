@@ -2,7 +2,7 @@ package com.veinik.Lesson7.src.main.resources.univer.dao;
 
 import com.veinik.Lesson7.src.main.resources.univer.dto.StudentDTO;
 import com.veinik.Lesson7.src.main.resources.univer.dao.interfaces.ObligationStudent;
-import com.veinik.Lesson7.src.main.resources.univer.myExceptions.MyExceptions;
+import com.veinik.Lesson7.src.main.resources.univer.myExceptions.DAOExceptions;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +18,7 @@ public class StudentDAO extends DaoObjects implements ObligationStudent {
     private static final String SQL_READALL = "SELECT * FROM STUDENTS";
 
     @Override
-    public StudentDTO create(StudentDTO student) throws MyExceptions {
+    public StudentDTO create(StudentDTO student) throws DAOExceptions {
         try {
             if (psINSERT == null) {
                 psINSERT = conn.prepareStatement(SQL_INSERT);
@@ -27,13 +27,13 @@ public class StudentDAO extends DaoObjects implements ObligationStudent {
             psINSERT.setString(2, student.getSecondName());
             psINSERT.executeUpdate();
         } catch (SQLException e) {
-            throw new MyExceptions("Dao error", e);
+            throw new DAOExceptions("Dao error", e);
         }
         return student;
     }
 
     @Override
-    public StudentDTO read(int key) throws MyExceptions {
+    public StudentDTO read(int key) throws DAOExceptions {
         StudentDTO student;
         try {
             if (psREAD == null) {
@@ -50,13 +50,13 @@ public class StudentDAO extends DaoObjects implements ObligationStudent {
             }
             res.close();
         } catch (SQLException e) {
-            throw new MyExceptions("Dao error", e);
+            throw new DAOExceptions("Dao error", e);
         }
         return student;
     }
 
     @Override
-    public void delete(int key) throws MyExceptions {
+    public void delete(int key) throws DAOExceptions {
         try {
             if (psDELETE == null) {
                 psDELETE = conn.prepareStatement(SQL_DELETE);
@@ -64,12 +64,12 @@ public class StudentDAO extends DaoObjects implements ObligationStudent {
             psDELETE.setInt(1, key);
             psDELETE.executeUpdate();
         } catch (SQLException e) {
-            throw new MyExceptions("Dao error", e);
+            throw new DAOExceptions("Dao error", e);
         }
     }
 
     @Override
-    public void update(StudentDTO student, int key) throws MyExceptions {
+    public void update(StudentDTO student, int key) throws DAOExceptions {
         try {
             if (psUPDATE == null) {
                 psUPDATE = conn.prepareStatement(SQL_UPDATE);
@@ -79,12 +79,12 @@ public class StudentDAO extends DaoObjects implements ObligationStudent {
             psUPDATE.setInt(3, key);
             psUPDATE.executeUpdate();
         } catch (SQLException e) {
-            throw new MyExceptions("Dao error", e);
+            throw new DAOExceptions("Dao error", e);
         }
     }
 
     @Override
-    public List<StudentDTO> readall() throws MyExceptions {
+    public List<StudentDTO> readall() throws DAOExceptions {
         List<StudentDTO> students = null;
         try {
             if (psREADALL == null) {
@@ -103,7 +103,7 @@ public class StudentDAO extends DaoObjects implements ObligationStudent {
             }
             res.close();
         } catch (SQLException e) {
-            throw new MyExceptions("Dao error", e);
+            throw new DAOExceptions("Dao error", e);
         }
         return students;
     }

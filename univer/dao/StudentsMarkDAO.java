@@ -4,7 +4,7 @@ import com.veinik.Lesson7.src.main.resources.univer.dto.StudentDTO;
 import com.veinik.Lesson7.src.main.resources.univer.dto.StudentsMarksDTO;
 import com.veinik.Lesson7.src.main.resources.univer.dto.SubjectDTO;
 import com.veinik.Lesson7.src.main.resources.univer.dao.interfaces.ObligationStudentsMark;
-import com.veinik.Lesson7.src.main.resources.univer.myExceptions.MyExceptions;
+import com.veinik.Lesson7.src.main.resources.univer.myExceptions.DAOExceptions;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,7 +28,7 @@ public class StudentsMarkDAO extends DaoObjects implements ObligationStudentsMar
             "where students.id = ?";
 
     @Override
-    public StudentsMarksDTO create(StudentsMarksDTO mark) throws MyExceptions {
+    public StudentsMarksDTO create(StudentsMarksDTO mark) throws DAOExceptions {
         try {
             if (psINSERT == null) {
                 psINSERT = conn.prepareStatement(SQL_INSERT);
@@ -38,13 +38,13 @@ public class StudentsMarkDAO extends DaoObjects implements ObligationStudentsMar
             psINSERT.setInt(3, mark.getMark());
             psINSERT.executeUpdate();
         } catch (SQLException e) {
-            throw new MyExceptions("Dao error", e);
+            throw new DAOExceptions("Dao error", e);
         }
         return mark;
     }
 
     @Override
-    public Map<StudentDTO, Map<SubjectDTO, StudentsMarksDTO>> read(int key) throws MyExceptions {
+    public Map<StudentDTO, Map<SubjectDTO, StudentsMarksDTO>> read(int key) throws DAOExceptions {
         Map<StudentDTO, Map<SubjectDTO, StudentsMarksDTO>> allTheMarksOfOneStudent = null;
         try {
             if (psREAD == null) {
@@ -71,13 +71,13 @@ public class StudentsMarkDAO extends DaoObjects implements ObligationStudentsMar
             allTheMarksOfOneStudent.put(student, subsMarks);
             res.close();
         } catch (SQLException e) {
-            throw new MyExceptions("Dao error", e);
+            throw new DAOExceptions("Dao error", e);
         }
         return allTheMarksOfOneStudent;
     }
 
     @Override
-    public void delete(int key) throws MyExceptions {
+    public void delete(int key) throws DAOExceptions {
         try {
             if (psDELETE == null) {
                 psDELETE = conn.prepareStatement(SQL_DELETE);
@@ -85,12 +85,12 @@ public class StudentsMarkDAO extends DaoObjects implements ObligationStudentsMar
             psDELETE.setInt(1, key);
             psDELETE.executeUpdate();
         } catch (SQLException e) {
-            throw new MyExceptions("Dao error", e);
+            throw new DAOExceptions("Dao error", e);
         }
     }
 
     @Override
-    public void update(StudentsMarksDTO mark) throws MyExceptions {
+    public void update(StudentsMarksDTO mark) throws DAOExceptions {
         try {
             if (psUPDATE == null) {
                 psUPDATE = conn.prepareStatement(SQL_UPDATE);
@@ -100,12 +100,12 @@ public class StudentsMarkDAO extends DaoObjects implements ObligationStudentsMar
             psUPDATE.setInt(3, mark.getIdStudent());
             psUPDATE.executeUpdate();
         } catch (SQLException e) {
-            throw new MyExceptions("Dao error", e);
+            throw new DAOExceptions("Dao error", e);
         }
     }
 
     @Override
-    public List<StudentsMarksDTO> readall() throws MyExceptions {
+    public List<StudentsMarksDTO> readall() throws DAOExceptions {
         List<StudentsMarksDTO> marks = new ArrayList<>();
         try {
             if (psREADALL == null) {
@@ -123,7 +123,7 @@ public class StudentsMarkDAO extends DaoObjects implements ObligationStudentsMar
             }
             res.close();
         } catch (SQLException e) {
-            throw new MyExceptions("Dao error", e);
+            throw new DAOExceptions("Dao error", e);
         }
         return marks;
     }
