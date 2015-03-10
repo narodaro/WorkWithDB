@@ -27,7 +27,7 @@ public class StudentDAO extends DaoObjects implements ObligationStudent {
             psINSERT.setString(2, student.getSecondName());
             psINSERT.executeUpdate();
         } catch (SQLException e) {
-            throw new MyExceptions();
+            throw new MyExceptions("Dao error", e);
         }
         return student;
     }
@@ -50,7 +50,7 @@ public class StudentDAO extends DaoObjects implements ObligationStudent {
             }
             res.close();
         } catch (SQLException e) {
-            throw new MyExceptions();
+            throw new MyExceptions("Dao error", e);
         }
         return student;
     }
@@ -64,7 +64,7 @@ public class StudentDAO extends DaoObjects implements ObligationStudent {
             psDELETE.setInt(1, key);
             psDELETE.executeUpdate();
         } catch (SQLException e) {
-            throw new MyExceptions();
+            throw new MyExceptions("Dao error", e);
         }
     }
 
@@ -79,7 +79,7 @@ public class StudentDAO extends DaoObjects implements ObligationStudent {
             psUPDATE.setInt(3, key);
             psUPDATE.executeUpdate();
         } catch (SQLException e) {
-            throw new MyExceptions();
+            throw new MyExceptions("Dao error", e);
         }
     }
 
@@ -103,7 +103,7 @@ public class StudentDAO extends DaoObjects implements ObligationStudent {
             }
             res.close();
         } catch (SQLException e) {
-            throw new MyExceptions();
+            throw new MyExceptions("Dao error", e);
         }
         return students;
     }

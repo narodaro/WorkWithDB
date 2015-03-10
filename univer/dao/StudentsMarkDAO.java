@@ -38,7 +38,7 @@ public class StudentsMarkDAO extends DaoObjects implements ObligationStudentsMar
             psINSERT.setInt(3, mark.getMark());
             psINSERT.executeUpdate();
         } catch (SQLException e) {
-            throw new MyExceptions();
+            throw new MyExceptions("Dao error", e);
         }
         return mark;
     }
@@ -71,7 +71,7 @@ public class StudentsMarkDAO extends DaoObjects implements ObligationStudentsMar
             allTheMarksOfOneStudent.put(student, subsMarks);
             res.close();
         } catch (SQLException e) {
-            throw new MyExceptions();
+            throw new MyExceptions("Dao error", e);
         }
         return allTheMarksOfOneStudent;
     }
@@ -85,7 +85,7 @@ public class StudentsMarkDAO extends DaoObjects implements ObligationStudentsMar
             psDELETE.setInt(1, key);
             psDELETE.executeUpdate();
         } catch (SQLException e) {
-            throw new MyExceptions();
+            throw new MyExceptions("Dao error", e);
         }
     }
 
@@ -100,7 +100,7 @@ public class StudentsMarkDAO extends DaoObjects implements ObligationStudentsMar
             psUPDATE.setInt(3, mark.getIdStudent());
             psUPDATE.executeUpdate();
         } catch (SQLException e) {
-            throw new MyExceptions();
+            throw new MyExceptions("Dao error", e);
         }
     }
 
@@ -123,7 +123,7 @@ public class StudentsMarkDAO extends DaoObjects implements ObligationStudentsMar
             }
             res.close();
         } catch (SQLException e) {
-            throw new MyExceptions();
+            throw new MyExceptions("Dao error", e);
         }
         return marks;
     }

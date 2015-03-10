@@ -26,7 +26,7 @@ public class SubjectsDAO extends DaoObjects implements ObligationSubject {
             psINSERT.setString(1, Subject.getSubject_name());
             psINSERT.executeUpdate();
         } catch (SQLException e) {
-            throw new MyExceptions();
+            throw new MyExceptions("Dao error", e);
         }
         return Subject;
     }
@@ -49,7 +49,7 @@ public class SubjectsDAO extends DaoObjects implements ObligationSubject {
             }
             res.close();
         } catch (SQLException e) {
-            throw new MyExceptions();
+            throw new MyExceptions("Dao error", e);
         }
         return subject;
     }
@@ -63,7 +63,7 @@ public class SubjectsDAO extends DaoObjects implements ObligationSubject {
             psDELETE.setInt(1, key);
             psDELETE.executeUpdate();
         } catch (SQLException e) {
-            throw new MyExceptions();
+            throw new MyExceptions("Dao error", e);
         }
     }
 
@@ -77,7 +77,7 @@ public class SubjectsDAO extends DaoObjects implements ObligationSubject {
             psUPDATE.setInt(2, key);
             psUPDATE.executeUpdate();
         } catch (SQLException e) {
-            throw new MyExceptions();
+            throw new MyExceptions("Dao error", e);
         }
     }
 
@@ -100,7 +100,7 @@ public class SubjectsDAO extends DaoObjects implements ObligationSubject {
             }
             res.close();
         } catch (SQLException e) {
-            throw new MyExceptions();
+            throw new MyExceptions("Dao error", e);
         }
         return subjects;
     }

@@ -8,6 +8,7 @@ import com.veinik.Lesson7.src.main.resources.univer.dbConnection.DBConnection;
 import com.veinik.Lesson7.src.main.resources.univer.dto.StudentDTO;
 import com.veinik.Lesson7.src.main.resources.univer.dto.StudentsMarksDTO;
 import com.veinik.Lesson7.src.main.resources.univer.dto.SubjectDTO;
+import com.veinik.Lesson7.src.main.resources.univer.myExceptions.MyExceptions;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -17,7 +18,7 @@ public class Main {
 
     private static Connection conn = new DBConnection().getDBConnection();
 
-    public static void main(String[] args) throws SQLException{
+    public static void main(String[] args) throws MyExceptions{
 
         StudentDAO student = new StudentDAO();
         StudentDTO st;
@@ -59,7 +60,11 @@ public class Main {
         subject.psClose();
         mark.psClose();
 
-        conn.close();
+        try {
+            conn.close();
+        } catch (SQLException e) {
+            throw new MyExceptions("Dao error", e);
+        }
     }
 
     private static void printMarksOneStudent(Map<StudentDTO, Map<SubjectDTO, StudentsMarksDTO>> allmarks) {

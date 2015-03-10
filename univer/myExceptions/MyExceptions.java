@@ -1,11 +1,23 @@
 package com.veinik.Lesson7.src.main.resources.univer.myExceptions;
 
-import java.io.PrintStream;
-import java.sql.SQLException;
 
-public class MyExceptions extends SQLException {
-    @Override
-    public void printStackTrace(PrintStream s) {
-        System.err.println("Exception occurred: " + s.toString());
+public class MyExceptions extends Exception {
+    public MyExceptions() {
+    }
+
+    public MyExceptions(String message) {
+        super(message);
+    }
+
+    public MyExceptions(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public MyExceptions(Throwable cause) {
+        super(cause);
+    }
+
+    public MyExceptions(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
     }
 }
